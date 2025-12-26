@@ -1,0 +1,50 @@
+---
+---
+<div class="rocket-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 160">
+        <path class="rocket-fire" fill="#FF5722" d="M32 75 L46 145 L18 145 Z" opacity="0.9"/>
+        <path class="rocket-fire-core" fill="#FFC107" d="M32 75 L40 120 L24 120 Z" opacity="1"/>
+
+        <g class="ship-body">
+            <path fill="#ECEFF1" d="M32 0 L48 75 L32 65 L16 75 Z"/>
+            <path fill="#D50000" d="M16 75 L0 80 L32 0 Z"/> 
+            <path fill="#D50000" d="M48 75 L64 80 L32 0 Z"/> 
+            <path fill="#263238" d="M32 20 L37 55 L32 62 L27 55 Z"/>
+            <path fill="#4FC3F7" d="M32 25 L34 45 L32 50 L30 45 Z" opacity="0.6"/> 
+            <path fill="#455A64" d="M20 75 L44 75 L32 65 Z"/>
+        </g>
+    </svg>
+</div>
+
+<style>
+    .rocket-container {
+        position: absolute;
+        z-index: 5;
+        width: 35px; 
+        height: auto;
+        animation: rocketFly 40s linear infinite;
+        left: -100px;
+        bottom: -100px;
+        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+        pointer-events: none; /* Para que no bloquee clicks */
+    }
+
+    @keyframes rocketFly {
+        0% { transform: translate(0, 0) rotate(45deg); opacity: 0; }
+        5% { opacity: 1; }
+        95% { opacity: 1; }
+        100% { transform: translate(calc(100vw + 200px), calc(-100vh - 200px)) rotate(45deg); opacity: 0; }
+    }
+
+    .rocket-fire, .rocket-fire-core {
+        transform-origin: 32px 75px; 
+        animation: firePulse 0.1s infinite alternate;
+    }
+    
+    .rocket-fire-core { animation: firePulse 0.08s infinite alternate-reverse; }
+
+    @keyframes firePulse {
+        0% { transform: scaleY(1); opacity: 0.9; }
+        100% { transform: scaleY(1.3); opacity: 1; }
+    }
+</style>

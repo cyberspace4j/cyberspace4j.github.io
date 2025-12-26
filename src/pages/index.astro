@@ -1,49 +1,118 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import ParticlesBackground from '../components/ParticlesBackground.astro';
+import Rocket from '../components/Rocket.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{SITE_TITLE}</title>
+    <meta name="description" content={SITE_DESCRIPTION} />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <ParticlesBackground />
+    <Rocket />
+
+    <div class="glass-card">
+        <div style="margin-top: 15px;"></div>
+        
+        <div class="text-container">
+            <div class="line-1">Hola, soy Javi, Cybersecurity Analyst & CTF Player</div>
+            
+            <div class="line-brand">
+                Bienvenido a <span class="highlight-name">CyberSpace4J</span>
+            </div>
+
+            <div class="line-2">
+                <span id="typing-text"></span><span class="cursor"></span>
+            </div>
+        </div>
+
+        <div class="action-container">
+            <a href="/blog/" class="btn-main">&gt;_ ENTRAR AL BLOG</a>
+            <a href="/about/" class="link-minimal">O descubre más <strong>sobre mí</strong> <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="social-icons">
+            <a href="https://github.com/javiernglz" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/javier-n-gonz%C3%A1lez-504862331/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:log4j.avi@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+
+    <style>
+        :root {
+            --bg-color: #050507; --purple-main: #7d2ae8; --text-main: #ffffff; --text-muted: #b3b3b3;
+        }
+        body {
+            margin: 0; padding: 0; overflow: hidden;
+            background-color: var(--bg-color);
+            background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+        }
+        .glass-card {
+            position: relative; z-index: 10;
+            background: rgba(20, 10, 30, 0.25); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(125, 42, 232, 0.15);
+            padding: 50px 40px; border-radius: 24px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            max-width: 600px; width: 90%; 
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        
+        .text-container { margin-bottom: 35px; text-align: center; }
+        
+        .line-1 { font-size: 1rem; color: #ffffff; margin-bottom: 10px; font-weight: 400; opacity: 0.9; }
+        
+        .line-brand { font-size: 1.2rem; color: #b3b3b3; margin-bottom: 8px; font-weight: 400; }
+        .highlight-name { 
+            font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.5rem; margin-left: 6px; 
+            background: linear-gradient(90deg, #af3cf6, #4568dc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            text-shadow: 0px 0px 25px rgba(100, 100, 255, 0.4);
+        }
+        
+        .line-2 { 
+            font-size: 1.2rem; color: var(--text-muted); font-family: 'Poppins', sans-serif; font-weight: 400; 
+            display: block; min-height: 1.em; margin-top: 5px; 
+        }
+
+        .cursor { display: inline-block; width: 2px; height: 1.1em; background-color: var(--purple-main); animation: blink 1s infinite; vertical-align: middle; margin-left: 2px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        .action-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 35px; }
+        .btn-main { display: block; width: 100%; max-width: 280px; padding: 16px 0; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; font-weight: 600; text-decoration: none; border-radius: 50px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4); font-size: 1rem; letter-spacing: 1.5px; font-family: 'Orbitron', sans-serif; text-align: center; }
+        .btn-main:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 25px rgba(106, 17, 203, 0.6); filter: brightness(1.1); }
+        .link-minimal { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); text-decoration: none; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
+        .link-minimal strong { color: rgba(255, 255, 255, 0.9); font-weight: 600; }
+        .link-minimal:hover { color: #af3cf6; transform: translateX(5px); }
+        .link-minimal i { margin-left: 5px; font-size: 0.8em; transition: transform 0.3s; }
+        .link-minimal:hover i { transform: translateX(3px); }
+        
+        .social-icons { display: flex; justify-content: center; gap: 25px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 25px; }
+        .social-link { color: var(--text-muted); font-size: 1.4rem; transition: all 0.3s; }
+        .social-link:hover { color: #af3cf6; transform: scale(1.1); }
+    </style>
+
+    <script>
+        const textToType = "Mi blog donde comparto mis recursos de ciberseguridad";
+        const speedText = 40; let index = 0;
+        function typeWriterText() {
+            const element = document.getElementById("typing-text");
+            if (element && index < textToType.length) {
+                element.innerHTML += textToType.charAt(index);
+                index++; setTimeout(typeWriterText, speedText);
+            }
+        }
+        setTimeout(typeWriterText, 800);
+    </script>
+</body>
 </html>
