@@ -67,7 +67,7 @@ function getCategoryImage(categorySlug: string) {
 <!doctype html>
 <html lang="en">
     <head>
-        <BaseHead title={`Categorías - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+        <BaseHead title={`Blog - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
         <style>
             main { 
                 width: 100%; 
@@ -75,16 +75,69 @@ function getCategoryImage(categorySlug: string) {
                 margin: 0 auto;
                 padding: 1rem 2rem 4rem 2rem;
             }
-            
-            .section-title { 
-                font-size: 2.5rem; 
-                margin-bottom: 0.5em; 
-                text-align: center; 
-                font-weight: 800; 
-                letter-spacing: -0.02em; 
-            }
-            .section-desc { text-align: center; color: rgb(var(--gray)); margin-bottom: 3rem; font-size: 1.1rem; }
 
+            /* --- ESTILOS HERO (NUEVO) --- */
+            .hero-section {
+                text-align: center;
+                padding: 2rem 0 4rem 0; /* Espacio generoso */
+            }
+
+            .brand-title {
+                font-size: 4.5rem; /* Título GIGANTE */
+                font-weight: 900;
+                margin: 0;
+                line-height: 1.1;
+                letter-spacing: -0.03em;
+                /* Degradado de texto base (Light Mode) */
+                background: linear-gradient(to right, #1f2937 20%, #64748b 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            /* En dark mode, el título brilla más (Blanco a Morado Claro) */
+            .dark .brand-title {
+                background: linear-gradient(to right, #ffffff 30%, #4e4c54 100%); 
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                /* Resplandor sutil */
+                filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.3)); 
+            }
+
+            .brand-accent {
+                /* El "4J" toma el color del acento global */
+                color: var(--accent); 
+                -webkit-text-fill-color: var(--accent);
+            }
+
+            .brand-subtitle {
+                font-size: 1.3rem;
+                color: rgb(var(--gray));
+                margin-top: 1.5rem;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+                line-height: 1.6;
+            }
+
+            .highlight {
+                color: var(--accent);
+                font-weight: 600;
+            }
+            
+            .grid-title {
+                text-align: center;
+                color: rgb(var(--gray));
+                margin-bottom: 2rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                font-size: 0.85rem; /* Estilo etiqueta pequeña */
+                opacity: 0.8;
+            }
+
+            /* --- GRID Y TARJETAS --- */
             .category-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr; 
@@ -195,30 +248,20 @@ function getCategoryImage(categorySlug: string) {
 
             /* --- ESTILO PILL BYTEBYTEGO --- */
             .mini-tag {
-                /* 1. Forma de Píldora Perfecta */
                 border-radius: 9999px; 
                 padding: 4px 12px;
-                
                 font-size: 0.75rem;
-                font-weight: 700; /* Letra más gordita */
-                
-                /* 2. Color "Inteligente": Hereda el color de la tarjeta */
-                /* Fondo: Color de la categoría con 15% opacidad (Pastel) */
+                font-weight: 700;
                 background-color: rgba(var(--card-color-rgb), 0.15);
-                /* Texto: Color de la categoría puro (Brillante/Oscuro) */
                 color: var(--card-color);
-                
-                /* Borde sutil del mismo color */
                 border: 1px solid rgba(var(--card-color-rgb), 0.2);
-                
                 white-space: nowrap;
                 transition: all 0.2s ease;
             }
 
-            /* Ajuste específico para Dark Mode para que resalte más */
             .dark .mini-tag {
-                background-color: rgba(var(--card-color-rgb), 0.2); /* Un pelín más intenso */
-                color: #ffffff; /* Texto blanco para máximo contraste sobre el color */
+                background-color: rgba(var(--card-color-rgb), 0.2);
+                color: #ffffff;
                 border: 1px solid rgba(var(--card-color-rgb), 0.4);
                 text-shadow: 0 1px 2px rgba(0,0,0,0.5);
             }
@@ -243,15 +286,24 @@ function getCategoryImage(categorySlug: string) {
                 .category-grid { grid-template-columns: 1fr; } 
                 main { padding: 1rem; }
                 .card-tags { max-width: 100%; } 
+                .brand-title { font-size: 3rem; }
             }
         </style>
     </head>
     <body>
         <Header />
         <main>
+            <section class="hero-section">
+                <h1 class="brand-title">CyberSpace<span class="brand-accent">4J</span></h1>
+                <br>
+                <p class="brand-subtitle">
+                    Artículos, documentos, "cheat sheets", guías y mucho más <br />
+                    <span class="highlight">Tu base de operaciones en ciberseguridad.</span>
+                </p>
+            </section>
+
             <section>
-                <h1 class="section-title">Categorías</h1>
-                <p class="section-desc">Selecciona un área para comenzar tu entrenamiento</p>
+                <h2 class="grid-title">Categorías</h2>
                 
                 <div class="category-grid">
                     {
@@ -270,7 +322,6 @@ function getCategoryImage(categorySlug: string) {
                                     
                                     <h2 class="category-name">{category}</h2>
                                     
-                                    {/* TAGS SIN ALMOHADILLA # Y ESTILO PILL */}
                                     <div class="card-tags">
                                         {tags.map(tag => (
                                             <span class="mini-tag">{tag}</span>

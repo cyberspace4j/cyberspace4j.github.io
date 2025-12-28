@@ -6,7 +6,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-    // Función slugify dentro para evitar errores de alcance
     function slugify(text: string) {
         return text
             .toString()
@@ -19,13 +18,8 @@ export async function getStaticPaths() {
     }
 
     const allPosts = await getCollection('blog');
-    
-    // CORRECCIÓN ROBUSTA:
-    // 1. Usamos (post.data.categories || []) para evitar fallos si un post no tiene categorías
-    // 2. Añadimos 'as string[]' al final para forzar el tipo y que TS no se queje
     const uniqueCategories = [...new Set(allPosts.map((post) => post.data.categories || []).flat())].filter(Boolean) as string[];
 
-    // Al haber puesto 'as string[]' arriba, ya no necesitamos poner ': string' aquí abajo
     return uniqueCategories.map((category) => {
         const filteredPosts = allPosts.filter((post) => 
             post.data.categories && post.data.categories.includes(category)
@@ -45,111 +39,97 @@ export async function getStaticPaths() {
 
 const { categoryName, posts } = Astro.props; 
 const displayTitle = categoryName || Astro.params.category;
+
+const getTagClass = (tag: string) => {
+    const slug = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
+    return `tag-${slug}`;
+};
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<BaseHead title={`${displayTitle} - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
+    <head>
+        <BaseHead title={`${displayTitle} - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+        <style>
+            main {
                 width: 100%;
-                height: auto;
-                object-fit: cover;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 1em;
+            }
             .category-header {
                 border-bottom: 2px solid var(--accent);
                 padding-bottom: 10px;
-                margin-bottom: 30px;
+                margin-bottom: 40px;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
             }
             .category-header h1 {
                 text-transform: capitalize;
                 font-size: 2.5em;
+                margin: 0;
             }
             .count {
-                font-size: 0.5em;
+                font-size: 0.4em;
                 background: var(--accent);
-                color: var(--bg-color);
-                padding: 2px 8px;
-                border-radius: 10px;
+                color: #fff;
+                padding: 4px 10px;
+                border-radius: 99px;
                 vertical-align: middle;
+                font-weight: bold;
             }
-
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
+        </style>
+    </head>
+    <body>
+        <Header />
+        <main>
             <div class="category-header">
-                <h1>📂 {displayTitle} <span class="count">{posts.length}</span></h1>
+                <h1> {displayTitle} <span class="count">{posts.length}</span></h1>
             </div>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={typeof post.data.heroImage === 'object' ? post.data.heroImage.src : post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										{post.data.pubDate.toLocaleDateString('es-ES', {
-											year: 'numeric',
-											month: 'short',
-											day: 'numeric',
-										})}
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+            
+            <section>
+                <ul class="clean-grid">
+                    {
+                        posts.map((post) => (
+                            <li>
+                                <a href={`/blog/${post.id}/`} class="clean-card">
+                                    
+                                    {/* 1. TAGS (AHORA ARRIBA DEL TODO) */}
+                                    {post.data.tags && (
+                                        <div class="tag-container">
+                                            {post.data.tags.map((tag: string) => (
+                                                <span class={`tag-pill ${getTagClass(tag)}`}>
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {/* 2. TÍTULO */}
+                                    <h3>{post.data.title}</h3>
+
+                                    {/* 3. DESCRIPCIÓN */}
+                                    <p class="description">
+                                        {post.data.description || "Sin descripción disponible."}
+                                    </p>
+                                    
+                                    {/* 4. FECHA (AHORA ABAJO DEL TODO) */}
+                                    <span class="date">
+                                        Actualizado el {post.data.pubDate.toLocaleDateString('es-ES', {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                        })}
+                                    </span>
+
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </section>
+        </main>
+        <Footer />
+    </body>
 </html>

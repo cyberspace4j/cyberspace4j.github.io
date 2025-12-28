@@ -1,4 +1,21 @@
-/* src/styles/global.css */
+/* ARCHIVO: src/styles/global.css
+
+   ÍNDICE DE CONTENIDOS:
+   1.  Variables & Tema (Colores, Dark Mode)
+   2.  Tipografía (Fuentes)
+   3.  Estilos Base (Body, Reset, HTML Elements)
+   4.  Layout (Main, Estructura)
+   5.  Elementos de Contenido (Texto, Citas, Imágenes)
+   6.  Utilidades (Helpers)
+   7.  COMPONENTE: Sistema de Tags (ByteByteGo Style)
+   8.  COMPONENTE: Bloques de Código Avanzados (Input vs Output)
+   9.  COMPONENTE: Tarjetas Compactas (Categorías)
+*/
+
+/* =============================================================================
+   1. VARIABLES & TEMA
+=============================================================================
+*/
 
 :root {
     /* -- Variables Base (Modo Claro) -- */
@@ -36,6 +53,11 @@
     --gray-gradient: #0b0a10, #0b0a10;
 }
 
+/* =============================================================================
+   2. TIPOGRAFÍA (FUENTES)
+=============================================================================
+*/
+
 @font-face {
     font-family: "Atkinson";
     src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -52,6 +74,11 @@
     font-display: swap;
 }
 
+/* =============================================================================
+   3. ESTILOS BASE (BODY, RESET, HTML ELEMENTS)
+=============================================================================
+*/
+
 body {
     font-family: "Atkinson", sans-serif;
     margin: 0;
@@ -67,6 +94,12 @@ body {
     font-size: 20px;
     line-height: 1.7;
     transition: background-color 0.3s, color 0.3s;
+
+    /* --- SISTEMA STICKY FOOTER --- */
+    /* Convierte el body en una columna flexible que ocupa toda la altura */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* --- AJUSTE ESPECIAL PARA EL FONDO DARK MODE --- */
@@ -81,13 +114,6 @@ html.dark body {
         );
     background-attachment: fixed; /* El fondo se queda fijo al hacer scroll */
     color: rgb(var(--black));
-}
-
-main {
-    width: 720px;
-    max-width: calc(100% - 2em);
-    margin: auto;
-    padding: 3em 1em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -107,6 +133,29 @@ strong, b { font-weight: 700; }
 a { color: var(--accent); }
 a:hover { color: var(--accent); }
 
+/* =============================================================================
+   4. LAYOUT
+=============================================================================
+*/
+
+main {
+    /* Un poco más ancho para llenar pantalla sin romper la lectura */
+    width: 100%;
+    max-width: 900px; 
+    
+    margin: auto;
+    padding: 3em 1em;
+
+    /* --- EMPUJA EL FOOTER ABAJO --- */
+    /* Hace que el main ocupe todo el espacio sobrante vertical */
+    flex: 1;
+}
+
+/* =============================================================================
+   5. ELEMENTOS DE CONTENIDO (TEXTO, CITAS, IMÁGENES)
+=============================================================================
+*/
+
 p { margin-bottom: 1em; }
 .prose p { margin-bottom: 2em; }
 
@@ -115,20 +164,6 @@ img {
     height: auto;
     border-radius: 8px;
 }
-
-code {
-    padding: 2px 5px;
-    background-color: rgb(var(--gray-light));
-    border-radius: 2px;
-}
-
-pre {
-    padding: 1.5em;
-    border-radius: 8px;
-    background-color: rgb(var(--gray-light));
-}
-
-pre > code { all: unset; }
 
 blockquote {
     border-left: 4px solid var(--accent);
@@ -142,7 +177,19 @@ hr {
     border-top: 1px solid rgb(var(--gray-light));
 }
 
-/* --- UTILIDAD ACCESIBILIDAD (Ocultar texto visualmente) --- */
+/* Código Inline (pequeño) */
+code {
+    padding: 2px 5px;
+    background-color: rgb(var(--gray-light));
+    border-radius: 2px;
+}
+
+/* =============================================================================
+   6. UTILIDADES
+=============================================================================
+*/
+
+/* Ocultar texto visualmente pero mantenerlo para lectores de pantalla */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -155,7 +202,10 @@ hr {
     border-width: 0;
 }
 
-/* --- SISTEMA DE TAGS "PIXEL PERFECT" (ESTILO BYTEBYTEGO) --- */
+/* =============================================================================
+   7. COMPONENTE: SISTEMA DE TAGS (BYTEBYTEGO STYLE)
+=============================================================================
+*/
 
 .tag-container {
     display: flex;
@@ -165,6 +215,7 @@ hr {
     align-items: center;
 }
 
+/* --- ESTILO BASE DEL TAG --- */
 .tag-pill {
     display: inline-flex;
     align-items: center;
@@ -181,56 +232,281 @@ hr {
     border: 1px solid transparent; 
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --bg-pill: #f3f4f6;
-    --text-pill: #4b5563;
-    --border-pill: transparent;
+    /* Variables locales por defecto (Gris Técnico) */
+    --bg-pill: #e5e8ec;
+    --text-pill: #475569;
+    --border-pill: #cbd5e1;
 
     background-color: var(--bg-pill);
     color: var(--text-pill) !important;
-    border-color: var(--border-pill);
+    border: 1px solid var(--border-pill);
 }
 
-/* --- PALETA DE COLORES DE TAGS --- */
+/* --- PALETA DE COLORES EXTENDIDA --- */
 
-/* Azul */
-.tag-blue-team, .tag-docker, .tag-kubernetes, .tag-cloud { 
-    --bg-pill: #eff6ff; --text-pill: #2563eb;
+/* 🔴 ROJO (Crítico, Errores, Danger) */
+.tag-critical, .tag-high, .tag-error, .tag-bug, 
+.tag-danger, .tag-red, .tag-pentesting, .tag-cve-critical {
+    --bg-pill: #fee2e2;
+    --text-pill: #991b1b;
+    --border-pill: #fca5a5;
 }
 
-/* Rojo */
-.tag-red-team, .tag-hacking, .tag-pentesting, .tag-exploit { 
-    --bg-pill: #fef2f2; --text-pill: #dc2626;
+/* 🍷 BURDEOS / VINO (Root, Kernel, Arquitectura, Legacy) */
+.tag-root, .tag-kernel, .tag-boot, .tag-bios, 
+.tag-architecture, .tag-legacy, .tag-burdeos {
+    --bg-pill: #ffe4e6;
+    --text-pill: #881337; 
+    --border-pill: #fda4af;
 }
 
-/* Verde */
-.tag-yara, .tag-malware, .tag-threat-hunting, .tag-blue-team-defense { 
-    --bg-pill: #f0fdf4; --text-pill: #16a34a;
+/* 🧞 ÍNDIGO (Dev, API, SQL, GraphQL) */
+.tag-api, .tag-graphql, .tag-rest, .tag-sql, 
+.tag-database, .tag-dev, .tag-indigo, .tag-coding {
+    --bg-pill: #e0e7ff;
+    --text-pill: #3730a3; 
+    --border-pill: #c7d2fe;
 }
 
-/* Morado */
-.tag-metasploit, .tag-ecpptv3, .tag-certificaciones { 
-    --bg-pill: #faf5ff; --text-pill: #9333ea;
+/* ☀️ AMARILLO (JS, Python, Warnings, Config) */
+.tag-javascript, .tag-js, .tag-python, .tag-warning, 
+.tag-config, .tag-yellow, .tag-json, .tag-yaml {
+    --bg-pill: #fef9c3;
+    --text-pill: #854d0e; 
+    --border-pill: #fde047;
 }
 
-/* Ámbar */
-.tag-vulnerabilidades, .tag-herramientas, .tag-tools { 
-    --bg-pill: #fffbeb; --text-pill: #d97706;
+/* 🟢 PISTACHO / VERDE (Defensivo, Validado, Splunk) */
+.tag-splunk, .tag-blue-team, .tag-defensa, .tag-defense, 
+.tag-forensics, .tag-dfir, .tag-logs, .tag-siem, .tag-hunting { 
+    --bg-pill: #ecfccb; 
+    --text-pill: #3f6212; 
+    --border-pill: #d9f99d;
 }
 
+/* ☁️ TURQUESA / CIAN (Cloud, Redes, Docker) */
+.tag-docker, .tag-kubernetes, .tag-cloud, .tag-aws, 
+.tag-azure, .tag-network, .tag-redes, .tag-sysadmin { 
+    --bg-pill: #cffafe; 
+    --text-pill: #155e75; 
+    --border-pill: #a5f3fc;
+}
 
-/* --- TAGS EN MODO OSCURO --- */
+/* 🟣 MORADO (Hacking, Red Team, Exploits) */
+.tag-red-team, .tag-hacking, .tag-exploit, 
+.tag-metasploit, .tag-malware, .tag-rce, .tag-ejpt, .tag-ecpptv3,
+ .tag-attack { 
+    --bg-pill: #f3e8ff; 
+    --text-pill: #7e22ce; 
+    --border-pill: #e9d5ff;
+}
+
+/* 🟠 NARANJA (Sistemas, Web, Apache) */
+.tag-web, .tag-apache, .tag-nginx, .tag-http, 
+.tag-linux, .tag-ubuntu, .tag-kali, .tag-orange { 
+    --bg-pill: #ffedd5; 
+    --text-pill: #c2410c; 
+    --border-pill: #fed7aa;
+}
+
+/* 🔵 AZUL ROYAL (Certificaciones, Windows, Active Directory) */
+.tag-certificaciones, .tag-oscp, 
+.tag-docencia, .tag-tutorial, .tag-windows, .tag-active-directory { 
+    --bg-pill: #dbeafe; 
+    --text-pill: #1d4ed8; 
+    --border-pill: #bfdbfe;
+}
+
+/* --- AJUSTE DARK MODE (Estilo Neón Sutil) --- */
 .dark .tag-pill {
-    /* Fondo con transparencia del color del texto */
     background-color: rgba(from var(--text-pill) r g b / 0.15);
     color: var(--text-pill) !important; 
-    border-color: rgba(from var(--text-pill) r g b / 0.1); 
+    border-color: rgba(from var(--text-pill) r g b / 0.35); 
 }
 
-.tag-pill:hover {
-    transform: translateY(-1px);
-    filter: brightness(0.97); 
-}
 .dark .tag-pill:hover {
-    filter: brightness(1.2);
     background-color: rgba(from var(--text-pill) r g b / 0.25);
+    filter: brightness(1.3);
+}
+
+/* =============================================================================
+   8. COMPONENTE: BLOQUES DE CÓDIGO AVANZADOS (INPUT vs OUTPUT)
+=============================================================================
+*/
+
+/* 1. Configuración Base para todos los bloques de código */
+pre {
+    position: relative;
+    padding-top: 2.5em !important;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent; 
+    
+    font-size: 0.85em;  /* Reducción al 85% */
+    line-height: 1.6;   /* Aire entre líneas */
+    
+    border-radius: 8px;
+    background-color: rgb(var(--gray-light));
+}
+
+pre > code { all: unset; }
+
+/* 2. Estilo Base de la Etiqueta (Badge) */
+pre::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px 12px;
+    font-size: 0.7rem; 
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom-left-radius: 8px;
+    pointer-events: none;
+    font-family: "Atkinson", sans-serif;
+    z-index: 10;
+}
+
+/* --- TIPO 1: CONSULTAS / INPUT (Bash, Shell) --- */
+pre.language-bash, pre.language-sh, pre.language-shell,
+pre[data-language="bash"], pre[data-language="sh"], pre[data-language="shell"] {
+    border-color: var(--accent); 
+    background-color: rgba(var(--accent-dark), 0.05);
+}
+
+pre.language-bash::before, pre[data-language="bash"]::before,
+pre.language-sh::before, pre[data-language="sh"]::before,
+pre.language-shell::before, pre[data-language="shell"]::before {
+    content: "⌨️ COMANDO";
+    background-color: var(--accent);
+    color: #ffffff;
+}
+
+/* --- TIPO 2: RESULTADOS / OUTPUT (Texto plano) --- */
+pre.language-text, pre.language-plaintext,
+pre[data-language="text"], pre[data-language="plaintext"] {
+    border-color: #475569; 
+    background-color: #1e293b !important; 
+}
+
+/* Ajuste específico para el texto dentro del output */
+pre[data-language="text"] > code,
+pre[data-language="plaintext"] > code {
+    color: #e2e8f0 !important; 
+    opacity: 0.9;
+}
+
+pre.language-text::before, pre[data-language="text"]::before,
+pre.language-plaintext::before, pre[data-language="plaintext"]::before {
+    content: "🖥️ SALIDA";
+    background-color: #475569; 
+    color: #f1f5f9;
+}
+
+/* Ajuste Dark Mode para Output */
+html.dark pre[data-language="text"], 
+html.dark pre[data-language="plaintext"] {
+    background-color: #0f172a !important; 
+    border-color: #334155;
+}
+
+/* =============================================================================
+   9. COMPONENTE: TARJETAS COMPACTAS (CATEGORÍAS)
+=============================================================================
+*/
+
+.clean-grid {
+    display: grid;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    max-width: 900px; 
+    margin: 0 auto; 
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .clean-grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+.clean-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    /* Padding superior reducido para pegar tags al borde */
+    padding: 0.8rem 1.4rem 1rem 1.4rem; 
+    
+    background-color: var(--bg-color);
+    border: 1px solid rgba(var(--gray), 0.25);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.clean-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tags (Override para tarjeta: Ultra-Fino) */
+.clean-card .tag-container {
+    margin-bottom: 0.6rem !important; 
+    gap: 6px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.clean-card .tag-pill {
+    /* Técnica 'Flex Center' para altura exacta */
+    display: inline-flex;     
+    align-items: center;      
+    justify-content: center;
+    
+    height: 18px;             /* ALTURA FIJA MUY FINA */
+    padding: 0 8px;           
+    
+    border-radius: 99px;
+    font-size: 0.65rem;       
+    font-weight: 500;         
+    line-height: 1;           
+    letter-spacing: 0.02em;
+}
+
+/* Título */
+.clean-card h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: rgb(var(--black));
+    line-height: 1.25;
+}
+
+/* Descripción */
+.clean-card .description {
+    font-size: 0.85rem;
+    color: rgb(var(--gray));
+    line-height: 1.5;
+    margin-bottom: 0.8rem; 
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fecha */
+.clean-card .date {
+    margin-top: auto; 
+    font-size: 0.7rem;
+    color: rgba(var(--gray), 0.7);
+    font-weight: 500;
+    border-top: 1px solid rgba(var(--gray), 0.1);
+    padding-top: 0.5rem;
 }
