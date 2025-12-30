@@ -67,6 +67,7 @@ Necesitamos que salgan a la vez.
 Esta opción utiliza una técnica de sincronización de último byte: Burp envía el 99% de cada petición y las deja esperando. Cuando todas están listas, suelta el último byte de todas simultáneamente, maximizando la probabilidad de que lleguen al servidor en el mismo instante.
 
 ![Configuración de envío paralelo en Burp Suite](../../assets/img/4-burp-parallel-config.png)
+
 ---
 
 ## Fase 4: Ejecución y Verificación

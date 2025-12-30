@@ -169,7 +169,7 @@ blockquote {
     border-left: 4px solid var(--accent);
     padding: 0 0 0 20px;
     margin: 0;
-    font-size: 1.333em;
+    font-size: 1em;
 }
 
 hr {
@@ -181,7 +181,10 @@ hr {
 code {
     padding: 2px 5px;
     background-color: rgb(var(--gray-light));
-    border-radius: 2px;
+    border-radius: 4px; /* Un poco más redondeado queda más moderno */
+    font-size: 0.85em; /* <--- CAMBIO CLAVE: Reduce el código al 85% */
+    font-family: 'Courier New', Courier, monospace; /* O tu fuente mono preferida */
+    vertical-align: middle; /* Ayuda a que no descuadre la línea */
 }
 
 /* =============================================================================
