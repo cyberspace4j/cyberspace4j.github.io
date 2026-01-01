@@ -6,13 +6,18 @@ import ThemeIcon from './ThemeIcon.astro';
 
 <header>
     <nav>
-        <h2><a href="/">{SITE_TITLE}</a></h2>
+        <h2 class="brand-logo">
+            <a href="/">
+                CyberSpace<span class="brand-accent">4J</span>
+            </a>
+        </h2>
+        
         <div class="internal-links">
             <HeaderLink href="/blog/">Inicio</HeaderLink>
             <HeaderLink href="/category/red-team">Red Team</HeaderLink>
             <HeaderLink href="/category/blue-team">Blue Team</HeaderLink>
-			<HeaderLink href="/category/certificaciones">Certificaciones</HeaderLink>
-			<HeaderLink href="/category/docencia">Docencia</HeaderLink>
+            <HeaderLink href="/category/certificaciones">Certificaciones</HeaderLink>
+            <HeaderLink href="/category/docencia">Docencia</HeaderLink>
             <HeaderLink href="/about">Sobre mí</HeaderLink>
         </div>
         <div class="social-links">
@@ -40,22 +45,47 @@ import ThemeIcon from './ThemeIcon.astro';
         <ThemeIcon /> 
     </nav>
 </header>
+
 <style>
     header {
         margin: 0;
         padding: 0 1em;
         background: var(--bg-color); 
         box-shadow: 0 2px 8px rgba(var(--black), 5%);
-    }
-    h2 {
-        margin: 0;
-        font-size: 1em;
+        /* Opcional: Si quieres que la barra se quede pegada al hacer scroll, descomenta esto: */
+        /* position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); */
     }
 
-    h2 a,
-    h2 a.active {
-        text-decoration: none;
+    /* --- CAMBIO: ESTILOS LOGO GRANDE Y MORADO --- */
+    h2.brand-logo {
+        margin: 0;
+        font-size: 1.6em; /* Aumentamos el tamaño */
     }
+
+    h2.brand-logo a {
+        text-decoration: none;
+        font-weight: 700;
+        color: var(--black); /* Hereda color según tema (blanco/negro) */
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s ease;
+    }
+
+    h2.brand-logo a:hover {
+        transform: scale(1.02); /* Efecto sutil al pasar el ratón */
+    }
+    
+    /* El "4J" con el degradado morado */
+    .brand-accent {
+        background: linear-gradient(180deg, #a855f7 0%, #4c1d95 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-left: 2px;
+        /* Sombra suave */
+        filter: drop-shadow(0 2px 4px rgba(124, 58, 237, 0.2));
+    }
+
     nav {
         display: flex;
         align-items: center;
@@ -80,16 +110,16 @@ import ThemeIcon from './ThemeIcon.astro';
             display: none;
         }
     }
-/* Utilidad para ocultar visualmente el texto de los iconos (sr-only) */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-}
+    
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
 </style>
